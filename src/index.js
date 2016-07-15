@@ -62,7 +62,7 @@ export default function ramda ( options ) {
             return {
                 code: magicString.toString(),
                 map: sourceMap
-                    ? magicString.generateMap({ hires: true })
+                    ? magicString.generateMap()
                     : null
             }
         }
