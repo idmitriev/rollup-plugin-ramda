@@ -14,6 +14,7 @@ export default function ramda ( options ) {
 
         transform(code, id){
             let ast
+            let transformedSomething = false
 
             try {
                 ast = parse( code, {
@@ -55,16 +56,19 @@ export default function ramda ( options ) {
                             node.end,
                             importStatements
                         )
+                        transformedSomething = true
                     }
                 }
             })
 
-            return {
-                code: magicString.toString(),
-                map: sourceMap
-                    ? magicString.generateMap()
-                    : null
-            }
+            return transformedSomething
+                ? {
+                    code: magicString.toString(),
+                    map: sourceMap
+                        ? magicString.generateMap()
+                        : null
+                }
+                : null
         }
     }
 }
