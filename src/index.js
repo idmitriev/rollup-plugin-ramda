@@ -41,10 +41,10 @@ export default function ramda ( options ) {
                             return
                         }
 
-                        if ( sourceMap ) {
-                            magicString.addSourcemapLocation( node.start )
-                            magicString.addSourcemapLocation( node.end )
-                        }
+                        // if ( sourceMap ) {
+                        //     magicString.addSourcemapLocation( node.start )
+                        //     magicString.addSourcemapLocation( node.end )
+                        // }
 
                         const importStatements = Object.keys(imports).map(
                             imported => `import ${imports[imported]} from 'ramda/src/${imported}';`
