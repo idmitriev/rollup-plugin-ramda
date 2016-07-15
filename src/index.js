@@ -28,6 +28,11 @@ export default function ramda ( options ) {
             const magicString = new MagicString( code )
 
             ast.body.forEach( node => {
+                if ( sourceMap ) {
+                    magicString.addSourcemapLocation( node.start )
+                    magicString.addSourcemapLocation( node.end )
+                }
+
                 if ( node.type === 'ImportDeclaration' ) {
                     if(node.source.value === 'ramda'){
                         let imports = {}
@@ -40,11 +45,6 @@ export default function ramda ( options ) {
                         if(Object.keys(imports).length == 0){
                             return
                         }
-
-                        // if ( sourceMap ) {
-                        //     magicString.addSourcemapLocation( node.start )
-                        //     magicString.addSourcemapLocation( node.end )
-                        // }
 
                         const importStatements = Object.keys(imports).map(
                             imported => `import ${imports[imported]} from 'ramda/src/${imported}';`
@@ -61,7 +61,9 @@ export default function ramda ( options ) {
 
             return {
                 code: magicString.toString(),
-                map: sourceMap ? magicString.generateMap() : null
+                map: sourceMap
+                    ? magicString.generateMap({ hires: true })
+                    : null
             }
         }
     }
