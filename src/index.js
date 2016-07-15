@@ -13,7 +13,7 @@ export default function ramda ( options ) {
         name: 'ramda',
 
         transform(code, id){
-            let ast;
+            let ast
 
             try {
                 ast = parse( code, {
@@ -22,7 +22,7 @@ export default function ramda ( options ) {
                 })
             } catch ( err ) {
                 err.message += ` in ${id}`
-                throw err;
+                throw err
             }
 
             const magicString = new MagicString( code )
@@ -30,16 +30,20 @@ export default function ramda ( options ) {
             ast.body.forEach( node => {
                 if ( node.type === 'ImportDeclaration' ) {
                     if(node.source.value === 'ramda'){
-                        let imports = []
+                        let imports = {}
                         node.specifiers.forEach( specifier => {
                             if(specifier.imported != null) {
-                                imports[specifier.imported.name] = specifier.local.name;
+                                imports[specifier.imported.name] = specifier.local.name
                             }
-                        });
+                        })
+
+                        if(Object.keys(imports).length == 0){
+                            return
+                        }
 
                         if ( sourceMap ) {
-                            magicString.addSourcemapLocation( node.start );
-                            magicString.addSourcemapLocation( node.end );
+                            magicString.addSourcemapLocation( node.start )
+                            magicString.addSourcemapLocation( node.end )
                         }
 
                         const importStatements = Object.keys(imports).map(
