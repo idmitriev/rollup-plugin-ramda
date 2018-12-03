@@ -1,5 +1,5 @@
 {
-  "name": "@flybonbdi/rollup-plugin-ramda",
+  "name": "@flybondi/rollup-plugin-ramda",
   "version": "1.0.0",
   "description": "Removes unused ramda dependencies",
   "license": "MIT",
