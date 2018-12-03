@@ -1,6 +1,6 @@
 {
-  "name": "rollup-plugin-ramda",
-  "version": "1.0.5",
+  "name": "@flybonbdi/rollup-plugin-ramda",
+  "version": "1.0.0",
   "description": "Removes unused ramda dependencies",
   "license": "MIT",
   "dependencies": {
@@ -19,18 +19,18 @@
     "README.md"
   ],
   "main": "dist/rollup-plugin-ramda.cjs.js",
-  "jsnext:main": "dist/rollup-plugin-ramda.es6.js",
+  "jsnext:main": "dist/rollup-plugin-ramda.js",
   "scripts": {
     "test": "mocha",
     "pretest": "npm run build",
-    "build": "rollup -c -f cjs -o dist/rollup-plugin-ramda.cjs.js && rollup -c -f es6 -o dist/rollup-plugin-ramda.es6.js",
+    "build": "rollup -c -f cjs -o dist/rollup-plugin-ramda.cjs.js && rollup -c -f es -o dist/rollup-plugin-ramda.js",
     "prebuild": "rm -rf dist/*",
     "prepublish": "npm test"
   },
   "author": "Ivan Dmitriev <iam@ivandmitriev.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/idmitriev/rollup-plugin-ramda.git"
+    "url": "git+https://github.com/flybondi/rollup-plugin-ramda.git"
   },
   "keywords": [
     "rollup",
