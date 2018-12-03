@@ -13,8 +13,7 @@ describe( 'rollup-plugin-ramda', function () {
         }).then(function (bundle) {
             var generated = bundle.generate();
             var code = generated.code;
-
-            assert.ok(code.indexOf("import map from 'ramda/src/map'") !== -1, generated.code);
+            assert.ok(code.indexOf("import map from 'ramda/es/map'") !== -1, generated.code);
         });
     });
 
@@ -27,8 +26,8 @@ describe( 'rollup-plugin-ramda', function () {
             var generated = bundle.generate();
             var code = generated.code;
 
-            assert.ok(code.indexOf("import map from 'ramda/src/map'") !== -1, generated.code);
-            assert.ok(code.indexOf("import reduce from 'ramda/src/reduce'") !== -1, generated.code);
+            assert.ok(code.indexOf("import map from 'ramda/es/map'") !== -1, generated.code);
+            assert.ok(code.indexOf("import reduce from 'ramda/es/reduce'") !== -1, generated.code);
         });
     });
 })
