@@ -48,7 +48,7 @@ export default function ramda ( options ) {
                         }
 
                         const importStatements = Object.keys(imports).map(
-                            imported => `import ${imports[imported]} from 'ramda/src/${imported}';`
+                            imported => `import ${imports[imported]} from 'ramda/es/${imported}';`
                         ).join('\n')
 
                         magicString.overwrite(
