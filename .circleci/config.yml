@@ -32,15 +32,28 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: Linting sources
-          command: yarn lint
-      - run:
           name: Running tests
           command: yarn test
-      - run:
-          name: Sending coverage report
-          command: yarn report
 
+  pre-release:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - run: *npm_config
+      - run:
+          name: Install deps
+          command: yarn install --pure-lockfile
+      - deploy:
+          name: Create pre-release and publish it to @next in npm
+          command: |
+            git config --global user.email $GIT_EMAIL
+            git config --global user.name $GIT_USERNAME
+            VER=$(npm dist-tags ls | grep next | cut -d ' ' -f 2)
+            jq ".version=\"$VER\"" < package.json > package2.json
+            mv package2.json package.json
+            git commit package.json -m "mock pck version"
+            npm version prerelease
+            npm publish --tag next
   release-creation:
     <<: *job_defaults
     steps:
@@ -68,7 +81,7 @@ jobs:
           command: yarn install --pure-lockfile
       - deploy:
           name: Semantic release
-          command: npx -p @semantic-release/git -p @semantic-release/exec -p semantic-release@next semantic-release
+          command: npx -p @flybondi/semantic-release-packages-config@$SEMANTIC_PKGS_VERSION -p semantic-release@$SEMANTIC_VERSION semantic-release -e @flybondi/semantic-release-packages-config
 
 workflows:
   version: 2
@@ -80,11 +93,17 @@ workflows:
               ignore:
                 - master
           context: flybondi-ci
-      - release-approval:
-          type: approval
+      - pre-release:
+          requires:
+            - health-check
           filters:
             branches:
               only: develop
+          context: flybondi-ci
+      - release-approval:
+          type: approval
+          requires:
+            - pre-release
       - release-creation:
           requires:
             - release-approval
@@ -94,3 +113,4 @@ workflows:
             branches:
               only: master
           context: flybondi-ci
+
