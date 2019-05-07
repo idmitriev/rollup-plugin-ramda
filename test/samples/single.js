@@ -1,3 +1,3 @@
-import {map} from "ramda"
+import { map } from 'ramda';
 
-map()
+map();
