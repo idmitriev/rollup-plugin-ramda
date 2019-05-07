@@ -1,6 +1,6 @@
 {
   "name": "@flybondi/rollup-plugin-ramda",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Removes unused ramda dependencies",
   "license": "MIT",
   "dependencies": {
@@ -37,7 +37,7 @@
     "prepublish": "yarn test",
     "lint": "eslint src/ test/"
   },
-  "author": "Ivan Dmitriev <iam@ivandmitriev.com>",
+  "author": "Flybondi <devs@flybondi.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/flybondi/rollup-plugin-ramda.git"
