@@ -1,33 +1,32 @@
-var assert = require( 'assert' );
-var rollup = require( 'rollup' );
-var ramda = require( '..' );
+var assert = require('assert');
+var rollup = require('rollup');
+var ramda = require('..');
 
-process.chdir( __dirname );
+process.chdir(__dirname);
 
-describe( 'rollup-plugin-ramda', function () {
-    it('inserts a single import statement', function () {
-        return rollup.rollup({
-            entry: 'samples/single.js',
-            plugins: [ ramda({}) ],
-            external: ['ramda'],
-        }).then(function (bundle) {
-            var generated = bundle.generate();
-            var code = generated.code;
-            assert.ok(code.indexOf("import map from 'ramda/es/map'") !== -1, generated.code);
-        });
+describe('rollup-plugin-ramda', function() {
+  it('inserts a single import statement', async function() {
+    const bundle = await rollup.rollup({
+      input: 'samples/single.js',
+      plugins: [ramda({})],
+      external: ['ramda']
     });
 
-    it('inserts multiple import statement', function () {
-        return rollup.rollup({
-            entry: 'samples/multiple.js',
-            plugins: [ ramda({}) ],
-            external: ['ramda'],
-        }).then(function (bundle) {
-            var generated = bundle.generate();
-            var code = generated.code;
+    const { output } = await bundle.generate({ format: 'esm' });
+    const asset = output[0];
+    assert.ok(asset.code.indexOf("import map from 'ramda/es/map'") !== -1, asset.code);
+  });
 
-            assert.ok(code.indexOf("import map from 'ramda/es/map'") !== -1, generated.code);
-            assert.ok(code.indexOf("import reduce from 'ramda/es/reduce'") !== -1, generated.code);
-        });
+  it('inserts multiple import statement', async function() {
+    const bundle = await rollup.rollup({
+      input: 'samples/multiple.js',
+      plugins: [ramda({})],
+      external: ['ramda']
     });
-})
+    const { output } = await bundle.generate({ format: 'esm' });
+    const asset = output[0];
+
+    assert.ok(asset.code.indexOf("import map from 'ramda/es/map'") !== -1, asset.code);
+    assert.ok(asset.code.indexOf("import reduce from 'ramda/es/reduce'") !== -1, asset.code);
+  });
+});

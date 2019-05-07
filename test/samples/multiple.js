@@ -1,3 +1,3 @@
-import {map,reduce} from 'ramda'
+import { map, reduce } from 'ramda';
 
-reduce(map())
+reduce(map());
