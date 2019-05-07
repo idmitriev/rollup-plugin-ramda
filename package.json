@@ -37,7 +37,7 @@
     "prepublish": "yarn test",
     "lint": "eslint src/ test/"
   },
-  "author": "Flybondi <devs@flybondi.com>",
+  "author": "Flybondi <dev@flybondi.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/flybondi/rollup-plugin-ramda.git"
